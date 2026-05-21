@@ -70,7 +70,7 @@ function renderTask(){
     }
 
 function startButtonHandler(id){
-    time=5;
+    time=25*60;
     current=id;
     const taskIndex=task.findIndex(t=>t.id===id);
 
@@ -90,6 +90,7 @@ function timeHandler(id){
         clearInterval(timer);
         markCompleted(id);
         timer=null;
+        sonarAlarma();
         renderTask();
             //tiempo de descanso
         startBreak();
@@ -113,7 +114,8 @@ function markCompleted(id){
 }
 
 function startBreak(){
-    time=3;
+
+    time=5*60;
     taskName.textContent='Break';
     renderTime();
     timerBreak=setInterval(()=>{
@@ -127,10 +129,38 @@ function timerBreakHandler(){
 
     if (time===0){
         clearInterval(timerBreak);
+        sonarAlarma();
         current=null;
         timerBreak=null;
         taskName.textContent='';
         renderTask();
 
     }
+}
+
+
+//funcion para sonar la alarma cuando acabe le tiempo, al finalizar el tiempo de trabajo y luego al finalizar el tiempo de descanso.
+
+function sonarAlarma() {
+  
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // 2. Crear los nodos del oscilador (sonido) y de ganancia (volumen)
+    const oscilador = audioCtx.createOscillator();
+    const ganancia = audioCtx.createGain();
+    
+    // 3. Configurar el tipo de onda y la frecuencia (tono de campana/bip)
+    oscilador.type = 'sine'; // Onda senoidal para un sonido limpio
+    oscilador.frequency.setValueAtTime(880, audioCtx.currentTime); // Nota La5 (aguda)
+    
+    // 4. Configurar el volumen para que disminuya suavemente (efecto campana)
+    ganancia.gain.setValueAtTime(0.5, audioCtx.currentTime);
+    ganancia.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.0); // Dura 1 segundo
+    
+    // 5. Conectar los nodos y reproducir
+    oscilador.connect(ganancia);
+    ganancia.connect(audioCtx.destination);
+    
+    oscilador.start();
+    oscilador.stop(audioCtx.currentTime + 1.0); // Se detiene en 1 segundo
 }
