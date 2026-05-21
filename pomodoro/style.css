@@ -1,6 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: purple;
+  font-family: 'Roboto Mono', monospace;
+  background-color: rgb(140, 134, 234);
+}
+
+.titulo {
+  text-align: center;
+  color: rgb(29, 4, 80);
+  padding: 20px 0;
+}
+
+.subtitulo {
+  text-align: center;
+  color: rgb(29, 4, 80);
+  padding: 10px 0;
+}
+
+.parrafo {
+  text-align: center;
+  color: rgb(29, 4, 80);
+  padding: 10px 0;
 }
 
 #app {
@@ -31,6 +51,7 @@ input[type="text"] {
   width: 300px;
 }
 button, input[type="submit"] {
+  font-family: 'Roboto Mono', monospace;
   border: none;
   background-color: #003366;
   color: white;

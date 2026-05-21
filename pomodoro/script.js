@@ -45,7 +45,7 @@ function renderTask(){
     const html= task.map(task=>{
         return `
         <div class="task">
-            <div class="completed">${task.completed ? `<span class="done">Done</span>`: `<button class="start-button" data-id="${task.id}">Start</button>`}</div>
+            <div class="completed">${task.completed ? `<span class="done">Done</span>`: `<button class="start-button" data-id="${task.id}">Comenzar</button>`}</div>
             <div class="title">${task.title}</div>
         </div>
         `
@@ -63,7 +63,7 @@ function renderTask(){
             if (!timer){
                 const id=button.getAttribute('data-id');
                 startButtonHandler(id);
-                button.textContent='In progress...';
+                button.textContent='En progreso...';
             }
         });
      });
